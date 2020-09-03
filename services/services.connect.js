@@ -7,6 +7,20 @@ const mongoose = require('mongoose');
  * Get a global setting by user id
 */
 module.exports.getConnection= async function(userId){
+    let response = {};
+    try{
+        const connections = await Connect.find({userId:userId}).exec();
+        if(!validate.isEmpty(connections)){
+            response = {status:200, data:connections};
+        }
+        else{
+            response = {status:404, message:"No connections for user"};
+        }
+    }
+    catch(err){
+        response = {status:500, message:"Some error occured"};
+    }
+    return response;
 };
 
 /**

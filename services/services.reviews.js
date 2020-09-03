@@ -6,6 +6,21 @@ const mongoose = require('mongoose');
  * Get a global setting by user id
 */
 module.exports.getReviews= async function(userId){
+    let response = {};
+    try{
+        const reviews = await Reviews.find({userId:userId}).exec();
+        if(!validate.isEmpty(reviews)){
+            response = {status: 200, data:reviews};
+        }
+        else{
+            response = {status:404, message:"No review found"};
+        }
+    }
+    catch(err){
+        console.log(err);
+        response = {status:500, message:"Some error occured"};
+    }
+    return response;
 };
 
 /**

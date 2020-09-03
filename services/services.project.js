@@ -7,6 +7,21 @@ const validate = require('validate.js');
  * Get a global setting by user id
 */
 module.exports.getProject= async function(userId){
+    let response ={};
+    try{
+        const projects = await Projects.find({userId:userId}).exec();
+        if(!validate.isEmpty(projects)){
+            response = {status: 200, data:projects};
+        }
+        else{
+            response= {status:404, message:"No projects found for user"};
+        }
+    }
+    catch(err){
+        console.log(err);
+        response = {status:500, message:"Some error occured"};
+    }
+    return response;
 };
 
 /**

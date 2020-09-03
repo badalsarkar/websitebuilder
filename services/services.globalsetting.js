@@ -1,11 +1,21 @@
 const {GlobalSettings} = require('../models/models.globalsetting');
-const {async} = require('validate.js');
+const validate = require('validate.js');
+const path = require('path');
 
 
 /**
  * Get a global setting by user id
 */
-module.exports.getGlobalSetting= async function(userId){
+module.exports.getGlobalSetting= async function(_id){
+    let response = {};
+    const setting = await GlobalSettings.findOne({_id:_id}).exec();
+    if(!validate.isEmpty(setting)){
+        response = {status:200, data:setting};
+    }
+    else{
+        response={status: 404, message:"Setting not found"}
+    }
+    return response;
 };
 
 /**
@@ -20,9 +30,9 @@ module.exports.updateGlobalSetting= async function (newSetting, logo){
     };
 
     try{
-        const result = await GlobalSettings.updateOne({_id:newSetting._id},update,{upsert:true});
+        const result = await GlobalSettings.findOneAndUpdate({_id:newSetting._id},update,{upsert:true, new:true});
         if(result){
-            response = {status:200, message:"Global setting successfully updated"};
+            response = {status:200, data: result};
         }
         else{
             console.log(result);
