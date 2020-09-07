@@ -52,5 +52,6 @@ exports.startServer = async function (app) {
     } catch (err) {
         //print connection error
         console.log(err);
+        process.exit(1);
     }
 };

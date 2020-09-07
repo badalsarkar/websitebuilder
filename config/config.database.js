@@ -27,7 +27,7 @@ exports.connectToDb = async function () {
         await mongoose.connect(uri, options);
         console.log("Connected to database");
     } catch (err) {
-        console.log(err);
+        throw err;
     }
 };
 
