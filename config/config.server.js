@@ -31,6 +31,7 @@ const corsConfig = {
 */
 exports.configureDependencies = function (app) {
     try {
+        app.use(bodyParser.json());
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(cookieParser());
         app.use(cors(corsConfig));

@@ -62,7 +62,24 @@ module.exports.updateProject= async function (newSetting, image){
 /**
  * Delete a global setting
 */
-module.exports.deleteProject= async function(userId){
-}
+module.exports.deleteProject= async function(userId, projectId){
+    let response ={};
+    console.log(userId);
+    console.log(projectId);
+    try{
+        let result =await Projects.deleteOne({_id:projectId, userId:userId});
+        if(result.deletedCount==1){
+            response={status:200, message: "Deleted"}
+        }
+        else{
+            response = {status: 404, message: "Project not found"}
+        }
+    }
+    catch(err){
+        console.log(err);
+        response={status:500, message:"Could not delete"};
+    }
+    return response;
+};
 
 

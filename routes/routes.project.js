@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const {updateProject, getProject}  = require('../services/services.project');
+const {updateProject, getProject, deleteProject}  = require('../services/services.project');
 const path = require('path');
 const multer = require('multer');
 const storage = multer.diskStorage({
@@ -43,6 +43,17 @@ router.get("/:userid", async function(req, res){
 */
 router.get("/media/:filename", function(req, res){
     res.sendFile(path.join(__dirname, `../uploads/projects/${req.params.filename}`));
+});
+
+
+/**
+ * Delete project
+*/
+router.delete("/", async function(req, res){
+    console.log(req.body);
+    const result = await deleteProject(req.body.userId, req.body.projectId);
+    res.status(result.status);
+    res.json(result.message);
 });
 
 module.exports=router;
