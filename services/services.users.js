@@ -22,7 +22,7 @@ module.exports.createUser=async function(userData){
                 //create user
                 await User.init();
                 let newUser = await User.create(userData);
-                response={status:201, message:"Registration successfull"};
+                response={status:201, message:"Registration successfull", data:newUser};
             }
         } catch (err) {
             if(err.code==11000){

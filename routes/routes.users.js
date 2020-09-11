@@ -17,6 +17,6 @@ router.get('/:id', async function(req, res) {
 router.post('/', upload.none(),async function(req, res){
     let result = await createUser(req.body);
     res.status(result.status);
-    res.json(result.message);
+    res.json(result.data._id);
 })
 module.exports = router;
