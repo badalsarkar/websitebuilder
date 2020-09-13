@@ -57,4 +57,9 @@ exports.passport = passport;
  * Authentication for route protection.
  * This will be added to the routes to be protected
  */
-exports.protectRoute = passport.authenticate("jwt", { session: false });
+// Uncomment the following function to activate route protection
+//exports.protectRoute = passport.authenticate("jwt", { session: false });
+// Delete the following function to activate route protection
+exports.protectRoute = function (req, res, next){
+    next();
+}

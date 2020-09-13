@@ -1,3 +1,9 @@
+/**
+ * @module Routes/Profile
+ *
+*/
+
+// All modules
 const express = require("express");
 const router = express.Router();
 const {
@@ -6,6 +12,7 @@ const {
 } = require("../services/services.profile");
 const multer = require("multer");
 const path = require('path');
+const {protectRoute} = require("../config/config.passport");
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, "./uploads/profilePicture/");
@@ -22,6 +29,7 @@ const upload = multer({ storage: storage });
  */
 router.put(
     "/",
+    protectRoute,
     upload.fields([
         { name: "image", maxCount: 1 },
         { name: "profileVideo", maxCount: 1 }
@@ -40,7 +48,7 @@ router.put(
 /**
  * Get a profile setting
  */
-router.get("/:id", async function (req, res) {
+router.get("/:id", protectRoute,  async function (req, res) {
     const result = await getProfileSetting(req.params.id);
     if (result.status !== 200) {
         res.status(result.status);
@@ -53,7 +61,7 @@ router.get("/:id", async function (req, res) {
 /**
  * Get profile image or video
  */
-router.get("/media/:filename", function (req, res) {
+router.get("/media/:filename", protectRoute,  function (req, res) {
     res.sendFile(
         path.join(__dirname, `../uploads/profilePicture/${req.params.filename}`)
     );

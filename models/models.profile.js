@@ -1,11 +1,14 @@
-
+/**
+ * @module Models/Profile 
+ * @description
+ * Database model for User Profile
+*/
 
 
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
 // user schema
-
 const ProfileSchema= new Schema({
     _id:{type:Mongoose.Types.ObjectId, ref:"users"},
     token:{type:String},
@@ -22,5 +25,4 @@ const ProfileSchema= new Schema({
 });
 
 const ProfileSetting = Mongoose.model("profile",ProfileSchema );
-
 exports.ProfileSetting = ProfileSetting;

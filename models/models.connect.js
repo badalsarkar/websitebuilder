@@ -1,10 +1,13 @@
-
+/**
+ * @module Models/Connect 
+ * @description
+ * Database model for Connect with me resource
+*/
 
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
 // user schema
-
 const ConnectSchema = new Schema({
     _id: {type:Mongoose.Types.ObjectId},
     userId:{type:Mongoose.Types.ObjectId, ref:"users"},
@@ -15,5 +18,4 @@ const ConnectSchema = new Schema({
 
 
 const Connect = Mongoose.model("Connection",ConnectSchema);
-
 exports.Connect = Connect;

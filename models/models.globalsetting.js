@@ -1,10 +1,13 @@
-
+/**
+ * @module Models/GlobalSettings 
+ * @description
+ * Database model for GlobalSettings resource
+*/
 
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
 // user schema
-
 const GlobalSettingSchema= new Schema({
     _id:{type:Mongoose.Types.ObjectId, ref:"users"},
     logo:{type:String},

@@ -1,3 +1,10 @@
+/**
+ * @module Services/Profile 
+ * @description
+ * Several methods related to Profile object
+*/
+
+// All modules
 const { ProfileSetting } = require("../models/models.profile");
 const validate = require('validate.js');
 
@@ -5,7 +12,6 @@ const validate = require('validate.js');
  * Get a global setting by user id
  */
 module.exports.getProfileSetting = async function (id) {
-
     let response = {};
     try{
         const setting = await ProfileSetting.findOne({_id:id}).exec();
@@ -22,7 +28,6 @@ module.exports.getProfileSetting = async function (id) {
     }
     return response;
 };
-
 
 
 /**
@@ -49,7 +54,6 @@ module.exports.updateProfileSetting = async function (newSetting, files) {
         shortbio: newSetting.shortbio,
         fullbio: newSetting.fullbio
     };
-
     try {
         const result = await ProfileSetting.findOneAndUpdate(
             { _id: newSetting._id },
