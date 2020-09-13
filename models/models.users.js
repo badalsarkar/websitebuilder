@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { isEmail } = require("../services/services.validation");
+const { isEmail } = require("../utilities/utilities.validation");
 const validate = require("validate.js");
 const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;

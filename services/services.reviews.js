@@ -9,7 +9,7 @@ module.exports.getReviews= async function(userId){
     let response = {};
     try{
         const reviews = await Reviews.find({userId:userId}).exec();
-        if(!validate.isEmpty(reviews)){
+        if(!isEmpty(reviews)){
             response = {status: 200, data:reviews};
         }
         else{
@@ -39,7 +39,6 @@ module.exports.updateReviews= async function (newSetting ){
         link:newSetting.link,
         rating:newSetting.rating
     }
-
     try{
         const result = await Reviews.updateOne({_id:newSetting._id},update,{upsert:true});
         if(result){

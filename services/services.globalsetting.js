@@ -9,7 +9,7 @@ const path = require('path');
 module.exports.getGlobalSetting= async function(_id){
     let response = {};
     const setting = await GlobalSettings.findOne({_id:_id}).exec();
-    if(!validate.isEmpty(setting)){
+    if(!isEmpty(setting)){
         response = {status:200, data:setting};
     }
     else{

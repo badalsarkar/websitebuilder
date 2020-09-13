@@ -10,7 +10,7 @@ module.exports.getProject= async function(userId){
     let response ={};
     try{
         const projects = await Projects.find({userId:userId}).exec();
-        if(!validate.isEmpty(projects)){
+        if(!isEmpty(projects)){
             response = {status: 200, data:projects};
         }
         else{
@@ -31,7 +31,7 @@ module.exports.updateProject= async function (newSetting, image){
     // user id can not be null
     // check it
     let response={};
-    if(validate.isEmpty(newSetting._id)){
+    if(isEmpty(newSetting._id)){
         newSetting._id = new mongoose.Types.ObjectId();
     }
     // update data

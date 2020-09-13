@@ -9,7 +9,7 @@ module.exports.getProfileSetting = async function (id) {
     let response = {};
     try{
         const setting = await ProfileSetting.findOne({_id:id}).exec();
-        if(!validate.isEmpty(setting)){
+        if(!isEmpty(setting)){
             response = {status:200, data: setting};
         }
         else{
@@ -56,7 +56,7 @@ module.exports.updateProfileSetting = async function (newSetting, files) {
             update,
             { upsert: true, new: true }
         );
-        if (!validate.isEmpty(result)) {
+        if (!isEmpty(result)) {
             response = { status: 200, data:result};
         } else {
             response = {status: 500, message:"Some error occured"};
