@@ -3,6 +3,7 @@
 var bodyParser = require("body-parser");
 const env = require("dotenv");
 const { connectToDb } = require("./config.database");
+const {passport} = require('./config.passport');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
@@ -35,6 +36,7 @@ exports.configureDependencies = function (app) {
         app.use(bodyParser.urlencoded({ extended: false }));
         app.use(cookieParser());
         app.use(cors(corsConfig));
+        app.use(passport.initialize());
     } catch (err) {
         console.log(err);
     }
