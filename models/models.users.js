@@ -1,3 +1,8 @@
+/**
+ * @module Models/User 
+ * @description
+ * Database model for User resource
+*/
 const mongoose = require("mongoose");
 const { isEmail } = require("../utilities/utilities.validation");
 const validate = require("validate.js");

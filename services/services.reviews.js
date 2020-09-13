@@ -1,4 +1,10 @@
+/**
+ * @module Services/Review 
+ * @description
+ * Several methods related to Review object
+*/
 
+// All modules
 const {Reviews} = require('../models/models.reviews');
 const validate = require('validate.js');
 const mongoose = require('mongoose');

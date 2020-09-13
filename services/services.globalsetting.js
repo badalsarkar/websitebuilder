@@ -1,3 +1,10 @@
+/**
+ * @module Services/GlobalSettings 
+ * @description
+ * Several methods related to GlobalSettings object
+*/
+
+// All modules
 const {GlobalSettings} = require('../models/models.globalsetting');
 const validate = require('validate.js');
 const path = require('path');
@@ -28,7 +35,6 @@ module.exports.updateGlobalSetting= async function (newSetting, logo){
         slogan:newSetting.slogan,
         token:newSetting.token
     };
-
     try{
         const result = await GlobalSettings.findOneAndUpdate({_id:newSetting._id},update,{upsert:true, new:true});
         if(result){

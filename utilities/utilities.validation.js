@@ -4,6 +4,7 @@
 */
 const validate = require('validate.js');
 
+// isEmpty function
 module.exports.isEmpty = function (item){
     return validate.isEmpty(item);
 }

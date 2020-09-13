@@ -1,9 +1,12 @@
-
+/**
+ * @module Models/Reviews 
+ * @description
+ * Database model for Review resource
+*/
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 
 // user schema
-
 const ReviewSchema = new Schema({
     _id:{type: Mongoose.Types.ObjectId},
     userId:{type:Mongoose.Types.ObjectId, ref:"users", required: true},

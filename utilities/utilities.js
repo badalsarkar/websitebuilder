@@ -1,6 +1,6 @@
 /**
  * This module contains different utility methods, used throughout the project.
- * @module Utilities
+ * @module Utilities/Utilities
  */
 
 const validate = require("validate.js");

@@ -1,4 +1,10 @@
+/**
+ * @module Services/Project 
+ * @description
+ * Several methods related to Project object
+*/
 
+// All modules
 const {Projects} = require('../models/models.project');
 const mongoose = require('mongoose');
 const validate = require('validate.js');
@@ -43,7 +49,6 @@ module.exports.updateProject= async function (newSetting, image){
         text: newSetting.text,
         title: newSetting.title
     };
-
     try{
         const result = await Projects.updateOne({_id:newSetting._id},update,{upsert:true});
         if(result){

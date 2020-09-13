@@ -1,21 +1,24 @@
+/**
+ * @module Utilities/ErrorClass 
+ * @description
+ * Contains several custom error class
+*/
+
 
 /**
  * Custom error calss
 */
 class MyCustomError extends Error{
-
     constructor(message){
         super(message);
         this.name = this.constructor.name;
         Error.captureStackTrace(this, this.constructor);
     }
 } 
-
 module.exports.MyCustomError = MyCustomError;
 
-
 /**
- * Custom error class.
+ * Duplicate Data Error
  *
  */
 class DuplicateDataError extends MyCustomError {
@@ -25,7 +28,6 @@ class DuplicateDataError extends MyCustomError {
         Error.captureStackTrace(this, this.constructor);
     }
 }
-
 module.exports.DuplicateDataError = DuplicateDataError;
 
 /**
