@@ -36,7 +36,7 @@ jwtOptions.secretOrKey = process.env.JWT_SECRET_KEY;
  */
 function verifyJWT(jwtPayload, next) {
     if (jwtPayload) {
-        next(null, { userName: jwtPayload.userName });
+        next(null, jwtPayload);
     } else {
         next(null, false);
     }
@@ -58,8 +58,8 @@ exports.passport = passport;
  * This will be added to the routes to be protected
  */
 // Uncomment the following function to activate route protection
-//exports.protectRoute = passport.authenticate("jwt", { session: false });
+exports.protectRoute = passport.authenticate("jwt", { session: false });
 // Delete the following function to activate route protection
-exports.protectRoute = function (req, res, next){
-    next();
-}
+//exports.protectRoute = function (req, res, next){
+//    next();
+//}

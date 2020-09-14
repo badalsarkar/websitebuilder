@@ -87,3 +87,74 @@ module.exports.getUser = async function (criteria) {
         return { status: 200, data: user };
     }
 };
+
+/**
+ * Edit a global setting
+*/
+module.exports.updateGlobalSetting= async function (userId, newSetting, logo){
+    let newGlobalSetting = {
+        logo:logo.filename,
+        slogan:newSetting.slogan,
+        token:newSetting.token
+    };
+    console.log(newGlobalSetting);
+    const {error,globalsetting} = await User.replaceGlobalSetting(userId, newGlobalSetting);
+    if(error){
+        return {status:error.status, message: error.message};
+    }
+    if(globalsetting){
+        return {status: http.ok, data:globalsetting};
+    }
+}
+
+/**
+ * Get a global setting by user id
+*/
+module.exports.getGlobalSetting= async function(userId){
+    const {error, globalSetting}= await User.getGlobalSetting(userId);
+    console.log(globalSetting);
+    if(error){
+        return {status:error.status, message:error.message};
+    }
+    return {status:http.ok, data:globalSetting};
+};
+
+/**
+ * Edit a global setting
+ */
+module.exports.updateProfileSetting = async function (userId, newSetting, files) {
+    //console.log(newSetting);
+    let newProfileSetting = {
+        token: newSetting.token,
+        name: newSetting.name,
+        phone: newSetting.phone,
+        address: newSetting.address,
+        socialLink: {
+            facebook: newSetting.facebook ? newSetting.facebook : null,
+            twitter: newSetting.twitter ? newSetting.twitter : null,
+            youtube: newSetting.youtube ? newSetting.youtube : null
+        },
+        email: newSetting.email,
+        aboutme: newSetting.aboutme,
+        image: files.image[0].filename,
+        profileVideo: files.profileVideo[0].filename,
+        shortbio: newSetting.shortbio,
+        fullbio: newSetting.fullbio
+    };
+    const {error, profilesetting} = await User.replaceProfileSetting(userId,newProfileSetting);
+    if(error){
+        return {status:error.status, message:error.message}
+    }
+    return {status:http.ok, data:profilesetting};
+};
+
+/**
+ * Get a global setting by user id
+*/
+module.exports.getProfileSetting= async function(userId){
+    const {error, profileSetting}= await User.getProfileSetting(userId);
+    if(error){
+        return {status:error.status, message:error.message};
+    }
+    return {status:http.ok, data:profileSetting};
+};

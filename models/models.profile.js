@@ -10,7 +10,6 @@ const Schema = Mongoose.Schema;
 
 // user schema
 const ProfileSchema= new Schema({
-    _id:{type:Mongoose.Types.ObjectId, ref:"users"},
     token:{type:String},
     name:{type:String},
     phone:{type:String},
@@ -24,5 +23,4 @@ const ProfileSchema= new Schema({
     fullbio:{type:String}
 });
 
-const ProfileSetting = Mongoose.model("profile",ProfileSchema );
-exports.ProfileSetting = ProfileSetting;
+exports.ProfileSetting = ProfileSchema;
