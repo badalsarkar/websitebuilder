@@ -3,6 +3,8 @@
  * @description
  * Database model for User resource
 */
+
+// All modules
 const mongoose = require("mongoose");
 const { isEmail, isEmpty } = require("../utilities/utilities.validation");
 const validate = require("validate.js");
@@ -146,6 +148,25 @@ async function getProfileSetting(userId){
     }
 }
 UserSchema.statics.getProfileSetting = getProfileSetting;
+
+/**
+ * Check if a user exists in the database
+*/
+async function existsInDatabase(userId){
+    try{
+        const user= await this.findById(userId, "_id").exec()
+        if(isEmpty(user)){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    catch(error){
+        return {error:{status:http.serverError, message:"Unexpected server error"}}
+    }
+}
+UserSchema.statics.existsInDatabase = existsInDatabase;
 
 // Compile User model
 const User = mongoose.model("Users", UserSchema);

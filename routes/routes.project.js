@@ -9,9 +9,10 @@ const {updateProject, getProject, deleteProject}  = require('../services/service
 const path = require('path');
 const multer = require('multer');
 const {protectRoute} = require('../config/config.passport');
+const {http} = require('../utilities/utilities');
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, path.join(__dirname, "../uploads/projects"));
+        cb(null, path.join(__dirname, "../uploads/"));
     },
     filename: function (req, file, cb) {
         console.log(file);
@@ -24,16 +25,21 @@ const upload = multer({storage:storage});
  * Create or update a global setting
 */
 router.put("/", protectRoute,  upload.single('image'), async function(req, res){
-    const result = await updateProject(req.body, req.file);
+    const result = await updateProject(req.user.id,req.body,req.file);
     res.status(result.status);
-    res.json(result.message);
+    if(result.status!=http.ok){
+        res.json(result.message);
+    }
+    else{
+        res.json(result.data)
+    }
 });
 
 /**
  * Get all projects 
 */
-router.get("/:userid", protectRoute,  async function(req, res){
-   const result = await getProject(req.params.userid); 
+router.get("/", protectRoute,  async function(req, res){
+   const result = await getProject(req.user.id); 
     if(result.status!==200){
         res.status(result.status);
         res.json(result.message);
@@ -45,7 +51,7 @@ router.get("/:userid", protectRoute,  async function(req, res){
  * Get project images
 */
 router.get("/media/:filename", protectRoute,  function(req, res){
-    res.sendFile(path.join(__dirname, `../uploads/projects/${req.params.filename}`));
+    res.sendFile(path.join(__dirname, `../uploads/${req.params.filename}`));
 });
 
 

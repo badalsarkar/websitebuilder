@@ -8,83 +8,57 @@
 const {Projects} = require('../models/models.project');
 const mongoose = require('mongoose');
 const validate = require('validate.js');
+const {http} = require('../utilities/utilities');
+const {User} = require('../models/models.users');
 
 /**
- * Get a global setting by user id
+ * Get All Projects 
 */
 module.exports.getProject= async function(userId){
-    let response ={};
-    try{
-        const projects = await Projects.find({userId:userId}).exec();
-        if(!isEmpty(projects)){
-            response = {status: 200, data:projects};
-        }
-        else{
-            response= {status:404, message:"No projects found for user"};
-        }
+    const {error, projects} = await Projects.getProjectForUser(userId);
+    if(error){
+        return {status:error.status, message:error.message}
     }
-    catch(err){
-        console.log(err);
-        response = {status:500, message:"Some error occured"};
-    }
-    return response;
+    return {status:http.ok, data:projects}
 };
 
 /**
  * Edit a global setting
 */
-module.exports.updateProject= async function (newSetting, image){
+module.exports.updateProject= async function (userId, newSetting, image){
     // user id can not be null
     // check it
-    let response={};
-    if(isEmpty(newSetting._id)){
-        newSetting._id = new mongoose.Types.ObjectId();
-    }
     // update data
-    let update = {
-        userId: newSetting.userId,
+    if(!await User.existsInDatabase(userId)){
+        return {status:http.notFound, message:"User not found"}
+    }
+    let projectData = {
+        userId: userId,
         token:newSetting.token,
         image:image.filename,
         link: newSetting.link,
         text: newSetting.text,
-        title: newSetting.title
+        title: newSetting.title,
+        _id:newSetting._id
     };
-    try{
-        const result = await Projects.updateOne({_id:newSetting._id},update,{upsert:true});
-        if(result){
-            response = {status:200, message:"Project setting successfully updated"};
-        }
-        else{
-            console.log(result);
-        }
+    const{error, project} = await Projects.updateProject(projectData);
+    if(error){
+        return {status:error.status, message:error.message}
     }
-    catch(err){
-        console.log(err);
-    }
-    return response;
+    return {status:http.ok, data:project};
 }
 
 /**
  * Delete a global setting
 */
 module.exports.deleteProject= async function(userId, projectId){
-    let response ={};
-    console.log(userId);
-    console.log(projectId);
-    try{
-        let result =await Projects.deleteOne({_id:projectId, userId:userId});
-        if(result.deletedCount==1){
-            response={status:200, message: "Deleted"}
-        }
-        else{
-            response = {status: 404, message: "Project not found"}
-        }
+    const {error, result} = await Projects.deleteOneProject(userId, projectId);
+    if(error){
+        return {status: error.status, message:error.message};
     }
-    catch(err){
-        console.log(err);
-        response={status:500, message:"Could not delete"};
+    else{
+        return {status: result.status, message:result.message};
     }
-    return response;
 };
 
 
